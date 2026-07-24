@@ -15,5 +15,3 @@ services:
         - POSTGRES_DB=notifications-db
     volumes:
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - notifications-net

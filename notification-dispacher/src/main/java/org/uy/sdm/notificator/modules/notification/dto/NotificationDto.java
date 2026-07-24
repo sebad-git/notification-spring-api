@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 @Data
 public class NotificationDto {
+	private Long id;
 	@NotBlank(message = "El campo 'recipient' es requerido")
 	private String recipient;
 	@NotBlank(message = "El campo 'channel' es requerido")
