@@ -1,0 +1,19 @@
+services:
+  postgresdb:
+    image: postgres:14
+    restart: "no"
+    container_name: "notifications-db"
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    environment:
+        - POSTGRES_USER=user
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=notifications-db
+    volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - notifications-net

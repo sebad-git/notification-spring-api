@@ -1,0 +1,20 @@
+services:
+  database:
+    extends:
+      file: database/posgres-db.yml
+      service: postgresdb
+  dispacher:
+    extends:
+      file: rabbitmq/rabbitmq.yml
+      service: rabbitmq
+  #pgadmin:
+  #  extends:
+  #    file: pg-admin/pg-admin.yml
+  #    service: pgadmin
+volumes:
+  postgres_data:
+  rabbitmq_data:
+
+networks:
+  notifications-net:
+    driver: bridge
