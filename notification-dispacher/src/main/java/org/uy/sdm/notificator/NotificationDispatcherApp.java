@@ -25,8 +25,6 @@ public class NotificationDispatcherApp {
 
 	@Bean
 	public ApplicationRunner initializeQueues(RabbitAdmin rabbitAdmin, Queue myQueue) {
-		return args -> {
-			rabbitAdmin.declareQueue(myQueue);
-		};
+		return args -> rabbitAdmin.declareQueue(myQueue);
 	}
 }

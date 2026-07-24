@@ -1,8 +1,12 @@
 package org.uy.sdm.notificator.modules.notification.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
 import org.springframework.stereotype.Service;
+import org.uy.sdm.notificator.modules.dispatcher.DispacherRabbitConfig;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationProducer;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationMapper;
@@ -13,6 +17,7 @@ import org.uy.sdm.notificator.modules.notification.repo.NotificationRepo;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
 	private final NotificationProducer notificationProducer;
@@ -23,12 +28,16 @@ public class NotificationServiceImpl implements NotificationService {
 		Notification notification = NotificationMapper.convert(notificationDto);
 		notification.setStatus(Status.RECEIVED);
 		notificationRepo.save(notification);
+		log.info("[NotificationService]: Notificacion marcada como recibida.");
 		NotificationMapper.convert(notification);
 		try {
 			notificationProducer.send(NotificationMapper.convert(notification));
 			notification.setStatus(Status.QUEUED);
 			notificationRepo.save(notification);
-		}catch (Exception e) {
+		}catch (AmqpException | IllegalArgumentException | JsonProcessingException e) {
+			log.error("[NotificationService]: Error enviando notificacion a la cola: [{}].",
+				DispacherRabbitConfig.NOTIFICATION_QUEUE
+			);
 			notification.setStatus(Status.FAILED);
 			notificationRepo.save(notification);
 		}
