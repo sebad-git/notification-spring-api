@@ -17,13 +17,11 @@ import org.uy.sdm.notificator.modules.notification.service.NotificationService;
 @RequestMapping(value = Endpoints.NOTIFICATIONS, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class NotificationController {
-	/**
-	 * Controlador para recibir las notificaciones desde otra api.
-	 * Injecta el servicio {@link NotificationService} por lombok.
-	 * Recibe un {@link NotificationDto} por post.
-	 */
 	private final NotificationService notificationService;
 
+	/**
+	 * Envia la notificacion recibida {@link NotificationDto} al servicio {@link NotificationService}.
+	 */
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<NotificationDto> addNotification(
 		@Valid @RequestBody NotificationDto notificationDto

@@ -13,8 +13,3 @@ services:
   #    service: pgadmin
 volumes:
   postgres_data:
-  rabbitmq_data:
-
-networks:
-  notifications-net:
-    driver: bridge

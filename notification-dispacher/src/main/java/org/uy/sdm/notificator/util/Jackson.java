@@ -1,5 +1,6 @@
 package org.uy.sdm.notificator.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
@@ -19,7 +20,11 @@ public class Jackson {
 		OBJECT_MAPPER.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
 	}
 
-    public static ObjectMapper getObjectMapper() {
-        return OBJECT_MAPPER;
-    }
+	public static String toJsonString(Object object) throws JsonProcessingException {
+		return OBJECT_MAPPER.writeValueAsString(object);
+	}
+
+	public static <T> T toObject(final String json, final Class<T> returnClass) {
+		return OBJECT_MAPPER.convertValue(json, returnClass);
+	}
 }

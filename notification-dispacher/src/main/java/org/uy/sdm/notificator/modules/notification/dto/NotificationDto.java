@@ -3,10 +3,16 @@ package org.uy.sdm.notificator.modules.notification.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 
 @Data
-public class NotificationDto {
+public class NotificationDto implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
 	@NotBlank(message = "El campo 'recipient' es requerido")
 	private String recipient;
 	@NotBlank(message = "El campo 'channel' es requerido")

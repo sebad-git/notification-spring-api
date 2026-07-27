@@ -52,7 +52,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 	private static class CredentialNotFoundError {
 		private String error = "No se encontaron las credenciales o son invalidas";
 		public String toJson() throws JsonProcessingException {
-			return Jackson.getObjectMapper().writeValueAsString(this);
+			return Jackson.toJsonString(this);
 		}
 	}
 

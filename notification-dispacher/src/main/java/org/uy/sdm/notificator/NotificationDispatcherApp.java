@@ -8,14 +8,15 @@ import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 @Slf4j
-public class NotificationDispacherApp {
+public class NotificationDispatcherApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NotificationDispacherApp.class, args);
+		SpringApplication.run(NotificationDispatcherApp.class, args);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void logStartup() {
-		log.info("\uD83D\uDE80 Application started Successfully!! ✅.");
+		log.info("\uD83D\uDE80 Application [Notification Dispatcher] started Successfully!! ✅.");
 	}
+
 }

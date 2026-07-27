@@ -60,6 +60,7 @@ public class Notification implements Serializable {
 		OffsetDateTime now = OffsetDateTime.now();
 		this.createdAt = now;
 		this.updatedAt = now;
+		this.status = Status.RECEIVED;
 	}
 
 	@PreUpdate

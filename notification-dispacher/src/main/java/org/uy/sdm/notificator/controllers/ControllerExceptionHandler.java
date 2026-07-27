@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.uy.sdm.notificator.exceptions.EmailValidationException;
 
 import java.util.Collection;
 
@@ -20,6 +21,13 @@ public class ControllerExceptionHandler {
 			.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
 		log.error(messages.toString(),ex);
 		return ResponseEntity.badRequest().body(messages);
+	}
+
+	@ExceptionHandler(EmailValidationException.class)
+	public ResponseEntity<String> handleEmailValidationException(EmailValidationException ex) {
+		log.error(ex.getMessage(),ex);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ex.getMessage());
 	}
 
 	@ExceptionHandler(Exception.class)

@@ -1,4 +1,4 @@
-package org.uy.sdm.notificator.config;
+package org.uy.sdm.notificator.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,17 +14,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.uy.sdm.notificator.security.ApiKeyFilter;
 
 import java.util.List;
-
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig implements WebMvcConfigurer {
-
-	//private final ApplicationProperties applicationProperties;
 
 	private final ApiKeyFilter apiKeyFilter;
 
