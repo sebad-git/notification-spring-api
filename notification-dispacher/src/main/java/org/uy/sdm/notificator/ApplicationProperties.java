@@ -26,4 +26,16 @@ public class ApplicationProperties {
 	@Valid
 	private String secretKey;
 
+	@Value("${spring.rabbitmq.notification.queue}")
+	@Valid
+	private String notificationQueue;
+
+	@Value("${spring.rabbitmq.notification.exchange}")
+	@Valid
+	private String notificationExchange;
+
+	@Value("${spring.rabbitmq.notification.routing-key}")
+	@Valid
+	private String notificationRoutingKey;
+
 }

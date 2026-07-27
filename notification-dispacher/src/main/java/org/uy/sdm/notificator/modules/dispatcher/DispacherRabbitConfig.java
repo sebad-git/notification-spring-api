@@ -1,24 +1,25 @@
 package org.uy.sdm.notificator.modules.dispatcher;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.QueueBuilder;
-import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableRabbit
+@RequiredArgsConstructor
 public class DispacherRabbitConfig {
 
 	public static final String NOTIFICATION_QUEUE = "notifications.queue";
 	public static final String NOTIFICATION_EXCHANGE = "notifications.exchange";
 	public static final String NOTIFICATION_ROUTING_KEY = "notifications.routing.key";
-
 
 	@Bean
 	public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
@@ -29,7 +30,6 @@ public class DispacherRabbitConfig {
 
 	@Bean
 	public Queue notificationQueue() {
-		System.out.println("===== CREANDO COLA notifications.queue =====");
 		return QueueBuilder.durable(NOTIFICATION_QUEUE).build();
 	}
 
@@ -46,4 +46,25 @@ public class DispacherRabbitConfig {
 			.with(NOTIFICATION_ROUTING_KEY);
 	}
 
+	@Bean
+	public MessageConverter jsonMessageConverter() {
+		return new Jackson2JsonMessageConverter();
+	}
+
+	@Bean
+	public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+		final RabbitTemplate template = new RabbitTemplate(connectionFactory);
+		template.setMessageConverter(jsonMessageConverter());
+		return template;
+	}
+
+	@Bean
+	public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+		final ConnectionFactory connectionFactory,
+		final MessageConverter jsonMessageConverter) {
+		final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setMessageConverter(jsonMessageConverter);
+		return factory;
+	}
 }

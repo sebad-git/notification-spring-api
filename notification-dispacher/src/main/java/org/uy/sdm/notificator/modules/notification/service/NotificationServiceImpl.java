@@ -1,6 +1,5 @@
 package org.uy.sdm.notificator.modules.notification.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,6 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public NotificationDto addNotification(NotificationDto notificationDto) {
 		Notification notification = NotificationMapper.convert(notificationDto);
-		notification.setStatus(Status.RECEIVED);
 		notificationRepo.save(notification);
 		log.info("[NotificationService]: Notificacion marcada como recibida.");
 		NotificationMapper.convert(notification);
@@ -34,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
 			notificationProducer.send(NotificationMapper.convert(notification));
 			notification.setStatus(Status.QUEUED);
 			notificationRepo.save(notification);
-		}catch (AmqpException | IllegalArgumentException | JsonProcessingException e) {
+		}catch (AmqpException | IllegalArgumentException e) {
 			log.error("[NotificationService]: Error enviando notificacion a la cola: [{}].",
 				DispacherRabbitConfig.NOTIFICATION_QUEUE
 			);
@@ -42,6 +40,11 @@ public class NotificationServiceImpl implements NotificationService {
 			notificationRepo.save(notification);
 		}
 		return NotificationMapper.convert(notification);
+	}
+
+	@Override
+	public void updateStatus(long notificationId, Status status) {
+		notificationRepo.updateStatus(notificationId,status);
 	}
 
 }
