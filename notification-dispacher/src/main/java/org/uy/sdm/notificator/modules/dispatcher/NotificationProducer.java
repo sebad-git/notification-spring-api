@@ -19,7 +19,7 @@ public class NotificationProducer {
 			DispacherRabbitConfig.NOTIFICATION_ROUTING_KEY,
 			notificationDto
 		);
-		log.info("[NotificationProducer]: Notificacion enviada a la cola: [{}].",
+		log.info("✅ [NotificationProducer]: Notificacion enviada a la cola: [{}].",
 			DispacherRabbitConfig.NOTIFICATION_QUEUE
 		);
 	}

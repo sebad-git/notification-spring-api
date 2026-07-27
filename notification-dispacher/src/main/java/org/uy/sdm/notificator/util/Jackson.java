@@ -24,7 +24,7 @@ public class Jackson {
 		return OBJECT_MAPPER.writeValueAsString(object);
 	}
 
-	public static <T> T toObject(final String json, final Class<T> returnClass) {
-		return OBJECT_MAPPER.convertValue(json, returnClass);
+	public static <T> T toObject(final String json, final Class<T> returnClass) throws JsonProcessingException {
+		return OBJECT_MAPPER.readValue(json, returnClass);
 	}
 }
