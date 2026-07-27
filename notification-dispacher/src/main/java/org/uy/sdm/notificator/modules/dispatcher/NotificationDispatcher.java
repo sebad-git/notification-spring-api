@@ -33,7 +33,7 @@ public class NotificationDispatcher {
 	)
 	@RabbitListener(queues = DispacherRabbitConfig.NOTIFICATION_QUEUE)
 	public void onMessageReceived(final NotificationDto notificationDto) {
-		log.info("[]: Procesando notificación id={}", notificationDto.getId());
+		log.info("[NotificationDispatcher]: Procesando notificación id={}", notificationDto.getId());
 		dispatchNotification(notificationDto);
 	}
 
@@ -45,7 +45,8 @@ public class NotificationDispatcher {
 				notificationDto.getSubject(),
 				notificationDto.getBody()
 			);
-			case Channel.LOG -> log.info("NOTIFICATION LOG | to={} | subject={} | body={} | priority={}",
+			case Channel.LOG -> log.info(
+				"✅ [NotificationDispatcher]: Logueando notificacion LOG | to={} | subject={} | body={} | priority={}",
 				notificationDto.getRecipient(),
 				notificationDto.getSubject(),
 				notificationDto.getBody(),
@@ -59,7 +60,7 @@ public class NotificationDispatcher {
 
 	@Recover
 	public void recover(Exception ex, NotificationDto notificationDto) {
-		log.error("La notificacion [{}] no pudo ser eviada despues del maximo de reintentos ({}).",
+		log.error("❌ [NotificationDispatcher]: La notificacion [{}] no pudo ser eviada despues del maximo de reintentos ({}).",
 			notificationDto.getId(),
 			MAX_ATTEMPTS,
 			ex

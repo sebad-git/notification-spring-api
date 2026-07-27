@@ -13,7 +13,7 @@ public interface NotificationRepo extends JpaRepository<Notification,Long> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Notification n SET t.status = status WHERE n.id = :notificationId")
+	@Query("UPDATE Notification nf SET nf.status = :status WHERE nf.id = :notificationId")
 	void updateStatus(long notificationId, Status status);
 }
 

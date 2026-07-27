@@ -26,14 +26,14 @@ public class NotificationServiceImpl implements NotificationService {
 	public NotificationDto addNotification(NotificationDto notificationDto) {
 		Notification notification = NotificationMapper.convert(notificationDto);
 		notificationRepo.save(notification);
-		log.info("[NotificationService]: Notificacion marcada como recibida.");
+		log.info("✅ [NotificationService]: Notificacion marcada como recibida.");
 		NotificationMapper.convert(notification);
 		try {
 			notificationProducer.send(NotificationMapper.convert(notification));
 			notification.setStatus(Status.QUEUED);
 			notificationRepo.save(notification);
 		}catch (AmqpException | IllegalArgumentException e) {
-			log.error("[NotificationService]: Error enviando notificacion a la cola: [{}].",
+			log.error("❌ [NotificationService]: Error enviando notificacion a la cola: [{}].",
 				DispacherRabbitConfig.NOTIFICATION_QUEUE
 			);
 			notification.setStatus(Status.FAILED);
