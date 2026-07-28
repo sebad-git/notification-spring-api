@@ -3,7 +3,6 @@ package org.uy.sdm.notificator.modules.notification.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.AmqpException;
 import org.springframework.stereotype.Service;
 import org.uy.sdm.notificator.config.DispacherRabbitConfig;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationProducer;
@@ -30,16 +29,15 @@ public class NotificationServiceImpl implements NotificationService {
 		NotificationMapper.convert(notification);
 		try {
 			notificationProducer.send(NotificationMapper.convert(notification));
-			notification.setStatus(Status.QUEUED);
-			notificationRepo.save(notification);
-		}catch (AmqpException | IllegalArgumentException e) {
+			updateStatus(notification.getId(), Status.QUEUED);
+			return NotificationMapper.convert(notification);
+		}catch (Exception e) {
 			log.error("❌ [NotificationService]: Error enviando notificacion a la cola: [{}].",
 				DispacherRabbitConfig.NOTIFICATION_QUEUE
 			);
-			notification.setStatus(Status.FAILED);
-			notificationRepo.save(notification);
+			updateStatus(notification.getId(), Status.QUEUED);
+			throw e;
 		}
-		return NotificationMapper.convert(notification);
 	}
 
 	@Override

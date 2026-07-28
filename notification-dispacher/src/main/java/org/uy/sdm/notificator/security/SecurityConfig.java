@@ -30,6 +30,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
+			//Agregado cors para pruebas locales,
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.sessionManagement(session ->
 				session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -37,8 +38,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.requestMatchers(HttpMethod.POST, authRequiredEndpoints).authenticated()
 				.anyRequest().permitAll()
 			)
+			//Deshablilita el login ya que no se usa para este caso,
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
+			//Agrega el filtro de api key antes del filtro de login.
 			.addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}

@@ -11,6 +11,10 @@ import org.uy.sdm.notificator.exceptions.EmailValidationException;
 
 import java.util.Collection;
 
+
+/**
+ * Clase para el manejo de ecepciones y devolver responses json mas claras.
+ */
 @ControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {

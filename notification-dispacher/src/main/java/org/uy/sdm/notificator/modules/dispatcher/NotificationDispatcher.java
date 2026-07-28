@@ -30,6 +30,12 @@ public class NotificationDispatcher {
 
 	private final NotificationService notificationService;
 
+	/**
+	 * Listener de RabbitMQ con 2 reinitentos.
+	 * Considere usar una DLQ para reintentos pero para este caso @Retryable alcanza.
+	 *
+	 * @param notificationDto los datos de la notificacion.
+	 */
 	@Retryable(
 		retryFor = { Exception.class },
 		maxAttempts = MAX_ATTEMPTS,
@@ -37,11 +43,19 @@ public class NotificationDispatcher {
 	)
 	@RabbitListener(queues = DispacherRabbitConfig.NOTIFICATION_QUEUE)
 	public void onMessageReceived(final NotificationDto notificationDto) {
-		log.info("[NotificationDispatcher]: Procesando notificación id={}", notificationDto.getId());
+		log.info("\uD83D\uDCE5 [NotificationDispatcher]: Notificacion:[{}] recibida", notificationDto.getId());
 		dispatchNotification(notificationDto);
 	}
 
+	/**
+	 * Procesa las notificaciones por diferentes canales.
+	 * Los canales heredan de ina interfaz channel para agregar mas en un futuro
+	 * y esta tipado para que no solo procese notificaciones.
+	 *
+	 * @param notificationDto los datos de la notificacion.
+	 */
 	private void dispatchNotification(final NotificationDto notificationDto) {
+		log.info("\uD83D\uDCDF [NotificationDispatcher]: Procesando notificacion:[{}]", notificationDto.getId());
 		final Channel channel = Channel.valueOf(notificationDto.getChannel());
 		switch (channel) {
 			case Channel.EMAIL -> emailService.send(notificationDto);
@@ -49,12 +63,20 @@ public class NotificationDispatcher {
 			case Channel.SERVICE -> serviceConnector.send(notificationDto);
 			default -> log.info("Canal no soportado: {}",channel);
 		}
+		log.info("✅ [NotificationDispatcher]: Notificacion despachada con exito:[{}]", notificationDto.getId());
 		notificationService.updateStatus(notificationDto.getId(),Status.DELIVERED);
 	}
 
+	/**
+	 * Metodo para manejar la notificacion cuando se acaban los reintentos
+	 * y marcar la notificacion como fallida.
+	 *
+	 * @param ex La ultima ecepcion.
+	 * @param notificationDto los datos de la notificacion.
+	 */
 	@Recover
 	public void recover(Exception ex, NotificationDto notificationDto) {
-		log.error("❌ [NotificationDispatcher]: La notificacion [{}] no pudo ser eviada despues del maximo de reintentos ({}).",
+		log.error("❌ [NotificationDispatcher]: La notificacion:[{}] no pudo ser eviada despues del maximo de reintentos ({}).",
 			notificationDto.getId(),
 			MAX_ATTEMPTS,
 			ex

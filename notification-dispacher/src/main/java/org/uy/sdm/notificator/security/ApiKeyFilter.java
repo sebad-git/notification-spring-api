@@ -46,6 +46,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
+	//Clase interna para devolver un error json mas legible.
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Data

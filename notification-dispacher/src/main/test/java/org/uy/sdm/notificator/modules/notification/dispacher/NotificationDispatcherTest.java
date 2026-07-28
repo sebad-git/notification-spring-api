@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.uy.sdm.notificator.modules.channels.email.EmailChannel;
+import org.uy.sdm.notificator.modules.channels.log.LogChannel;
 import org.uy.sdm.notificator.modules.channels.service.ServiceChannel;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationDispatcher;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
@@ -28,9 +29,11 @@ public class NotificationDispatcherTest {
 	private NotificationDispatcher notificationDispatcher;
 
 	@Mock
-	private EmailChannel emailService;
+	private EmailChannel emailChannel;
 	@Mock
-	private ServiceChannel serviceConnector;
+	private ServiceChannel serviceChannel;
+	@Mock
+	private LogChannel logChannel;
 	@Mock
 	private NotificationService notificationService;
 
@@ -51,6 +54,7 @@ public class NotificationDispatcherTest {
 	public void onLogNotificationReceivedTest() {
 		testNotificationDto.setChannel(Channel.LOG.name());
 		notificationDispatcher.onMessageReceived(testNotificationDto);
+		verify(logChannel,atLeastOnce()).send(any());
 		verify(notificationService,atLeastOnce()).updateStatus(anyLong(),any());
 	}
 
@@ -58,6 +62,7 @@ public class NotificationDispatcherTest {
 	public void onEmailNotificationReceivedTest() {
 		testNotificationDto.setChannel(Channel.EMAIL.name());
 		notificationDispatcher.onMessageReceived(testNotificationDto);
+		verify(emailChannel,atLeastOnce()).send(any());
 		verify(notificationService,atLeastOnce()).updateStatus(anyLong(),any());
 	}
 
@@ -65,6 +70,7 @@ public class NotificationDispatcherTest {
 	public void onServiceNotificationReceivedTest() {
 		testNotificationDto.setChannel(Channel.SERVICE.name());
 		notificationDispatcher.onMessageReceived(testNotificationDto);
+		verify(serviceChannel,atLeastOnce()).send(any());
 		verify(notificationService,atLeastOnce()).updateStatus(anyLong(),any());
 	}
 

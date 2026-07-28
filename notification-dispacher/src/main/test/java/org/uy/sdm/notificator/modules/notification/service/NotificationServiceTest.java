@@ -34,6 +34,7 @@ public class NotificationServiceTest {
 	@Test
 	public void createNotification() {
 		final NotificationDto testNotificationDto = new NotificationDto();
+		testNotificationDto.setId(1L);
 		testNotificationDto.setRecipient("Test Recipient");
 		testNotificationDto.setSubject("Test Subject");
 		testNotificationDto.setChannel(Channel.EMAIL.name());
