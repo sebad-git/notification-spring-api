@@ -18,7 +18,7 @@ import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 @RequiredArgsConstructor
 public class EmailChannelImpl implements EmailChannel {
 
-	@Value("${spring.mail.from:noreply@notificator.local}")
+	@Value("${spring.mail.from:noreply@notificator.uy}")
 	@Valid
 	private String noReply;
 	private final JavaMailSender mailSender;
@@ -33,7 +33,7 @@ public class EmailChannelImpl implements EmailChannel {
 		final String body = message.getBody();
 		this.validateEmail(recipient,subject,body);
 		try {
-			log.info("\uD83D\uDCE4 [EmailChannel]: Enviando mensaje a [{}] con el asunto[{}] y body:[{}]",
+			log.info("\uD83D\uDCE1 [EmailChannel]: Enviando mensaje a [{}] con el asunto[{}] y body:[{}]",
 				recipient, subject, body
 			);
 			final MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -43,6 +43,10 @@ public class EmailChannelImpl implements EmailChannel {
 			helper.setSubject(subject);
 			helper.setText(body, false);
 			mailSender.send(mimeMessage);
+			log.error("\uD83D\uDCE4 [EmailChannel]: e-mail enviado con exito a:[{}] para la notificacion:[{}].",
+				message.getRecipient(),
+				message.getId()
+			);
 		} catch (Exception e) {
 			log.error("❌ [EmailChannel]: Error la notificacion:[{}] por mail",message.getId(), e);
 			//Relanza la ecepcion para ejecutar reintentos.

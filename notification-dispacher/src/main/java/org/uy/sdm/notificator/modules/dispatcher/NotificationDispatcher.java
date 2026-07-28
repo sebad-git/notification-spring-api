@@ -63,7 +63,7 @@ public class NotificationDispatcher {
 			case Channel.SERVICE -> serviceConnector.send(notificationDto);
 			default -> log.info("Canal no soportado: {}",channel);
 		}
-		log.info("✅ [NotificationDispatcher]: Notificacion despachada con exito:[{}]", notificationDto.getId());
+		log.info("✅ [NotificationDispatcher]: Notificacion:[{}] despachada con exito.", notificationDto.getId());
 		notificationService.updateStatus(notificationDto.getId(),Status.DELIVERED);
 	}
 
