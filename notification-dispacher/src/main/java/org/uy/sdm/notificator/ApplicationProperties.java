@@ -31,4 +31,5 @@ public class ApplicationProperties {
 	@Valid
 	private String receiverServiceUrl;
 
+
 }

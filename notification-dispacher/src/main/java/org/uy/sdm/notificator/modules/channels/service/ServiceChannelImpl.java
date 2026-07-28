@@ -33,11 +33,13 @@ public class ServiceChannelImpl implements ServiceChannel {
 			headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 			headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 			headers.set(ApplicationProperties.API_KEY,this.props.getSecretKey());
-			log.info("\uD83D\uDCE4 [ServiceChannel]: Enviando notificación al servicio:[{}]", endpointUrl);
+			log.info("\uD83D\uDCE4 [ServiceChannel]: Enviando notificacion al servicio:[{}]", endpointUrl);
 			restTemplate.postForEntity(endpointUrl, new HttpEntity<>(message, headers), Void.class);
-			log.info("✅ [ServiceChannel]: Notificación enviada al servicio:[{}]", endpointUrl);
+			log.info("✅ [ServiceChannel]: Notificacion enviada al servicio:[{}]", endpointUrl);
 		} catch (Exception e) {
-			log.error("❌ [ServiceChannel]: Error llamando al servicio:[{}]",endpointUrl, e);
+			log.error("❌ [ServiceChannel]: Error llamando al servicio:[{}] la notificacion:[{}] no pudo ser enviada."
+				,endpointUrl, message.getId(), e
+			);
 			//Relanza la ecepcion para ejecutar reintentos.
 			throw e;
 		}
