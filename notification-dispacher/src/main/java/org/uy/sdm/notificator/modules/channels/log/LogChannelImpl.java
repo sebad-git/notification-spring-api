@@ -23,7 +23,7 @@ public class LogChannelImpl implements LogChannel {
 		} catch (Exception e) {
 			log.error("Error llamando al servicio externo", e);
 			log.error("❌ [LogChannel]: Error logueando notificacion:[{}].",
-				DispacherRabbitConfig.NOTIFICATION_QUEUE
+				message.getId()
 			);
 			//Relanza la ecepcion para ejecutar reintentos.
 			throw e;

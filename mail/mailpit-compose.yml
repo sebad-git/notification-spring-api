@@ -1,0 +1,8 @@
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: notifications-mail-server
+    ports:
+      - "1025:1025"   # Puerto SMTP
+      - "8025:8025"   # UI
+    restart: unless-stopped

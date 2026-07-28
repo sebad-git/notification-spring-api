@@ -11,9 +11,9 @@ services:
     extends:
       file: notification-reciever/node-reciever.yml
       service: nodejs-reciever
-  #pgadmin:
-  #  extends:
-  #    file: pg-admin/pg-admin.yml
-  #    service: pgadmin
+  mail:
+    extends:
+      file: mail/mailpit-compose.yml
+      service: mailpit
 volumes:
   postgres_data:
