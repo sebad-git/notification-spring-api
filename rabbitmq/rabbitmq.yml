@@ -1,5 +1,5 @@
 services:
-  rabbitmq:
+  notifications-rmq:
     image: rabbitmq:3.13-management
     container_name: notifications-rmq
     ports:

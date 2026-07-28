@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
+import org.uy.sdm.notificator.config.DispacherRabbitConfig;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 
 @Component

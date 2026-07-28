@@ -1,4 +1,4 @@
-package org.uy.sdm.notificator.modules.notification.dispacher;
+package org.uy.sdm.notificator.config;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,6 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.uy.sdm.notificator.modules.dispatcher.DispacherRabbitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

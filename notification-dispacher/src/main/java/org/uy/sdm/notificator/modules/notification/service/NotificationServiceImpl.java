@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.stereotype.Service;
-import org.uy.sdm.notificator.modules.dispatcher.DispacherRabbitConfig;
+import org.uy.sdm.notificator.config.DispacherRabbitConfig;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationProducer;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationMapper;
