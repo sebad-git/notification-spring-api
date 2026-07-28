@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.uy.sdm.notificator.modules.channels.email.EmailService;
-import org.uy.sdm.notificator.modules.channels.service.ServiceConnector;
+import org.uy.sdm.notificator.modules.channels.email.EmailChannel;
+import org.uy.sdm.notificator.modules.channels.service.ServiceChannel;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationDispatcher;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 import org.uy.sdm.notificator.modules.notification.model.Channel;
@@ -28,9 +28,9 @@ public class NotificationDispatcherTest {
 	private NotificationDispatcher notificationDispatcher;
 
 	@Mock
-	private EmailService emailService;
+	private EmailChannel emailService;
 	@Mock
-	private ServiceConnector serviceConnector;
+	private ServiceChannel serviceConnector;
 	@Mock
 	private NotificationService notificationService;
 

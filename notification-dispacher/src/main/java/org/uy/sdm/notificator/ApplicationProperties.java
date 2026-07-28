@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class ApplicationProperties {
 
+	public static final String API_KEY = "X-API-KEY";
+
 	@Value("${server.servlet.context-path}")
 	@Valid
 	private String contextPath;
@@ -24,4 +26,9 @@ public class ApplicationProperties {
 	@Value("${spring.security.api-key}")
 	@Valid
 	private String secretKey;
+
+	@Value("${app.reciever.url:http://localhost:3001/api/notify}")
+	@Valid
+	private String receiverServiceUrl;
+
 }

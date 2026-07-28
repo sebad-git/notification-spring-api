@@ -1,4 +1,4 @@
-package org.uy.sdm.notificator.modules.dispatcher;
+package org.uy.sdm.notificator.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;

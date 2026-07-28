@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.uy.sdm.notificator.modules.dispatcher.DispacherRabbitConfig;
+import org.uy.sdm.notificator.config.DispacherRabbitConfig;
 import org.uy.sdm.notificator.modules.dispatcher.NotificationProducer;
 import org.uy.sdm.notificator.modules.notification.dto.NotificationDto;
 

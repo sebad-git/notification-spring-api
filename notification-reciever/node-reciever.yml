@@ -1,0 +1,8 @@
+services:
+  nodejs-reciever:
+    build: .
+    container_name: service-reciever
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development

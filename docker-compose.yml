@@ -3,10 +3,14 @@ services:
     extends:
       file: database/posgres-db.yml
       service: postgresdb
-  dispacher:
+  notifications-rmq:
     extends:
       file: rabbitmq/rabbitmq.yml
-      service: rabbitmq
+      service: notifications-rmq
+  reciever:
+    extends:
+      file: notification-reciever/node-reciever.yml
+      service: nodejs-reciever
   #pgadmin:
   #  extends:
   #    file: pg-admin/pg-admin.yml

@@ -35,7 +35,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 									@NonNull FilterChain filterChain) throws ServletException, IOException {
 		String path = request.getRequestURI();
 		if (path.startsWith(String.format("%s/notifications",this.contextPath))) {
-			final String apiKey = request.getHeader("X-API-KEY");
+			final String apiKey = request.getHeader(ApplicationProperties.API_KEY);
 			if (Strings.isEmpty(apiKey) || !apiKey.equals(this.secretKey)) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				response.setContentType(MediaType.APPLICATION_JSON_VALUE);
