@@ -20,3 +20,20 @@ public class NotificationDispatcherApp {
 	}
 
 }
+
+/**
+ * Wildfly
+ *
+ * @SpringBootApplication
+ * public class NotificationDispatcherApp extends SpringBootServletInitializer {
+ *
+ *     @Override
+ *     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+ *         return builder.sources(NotificationDispatcherApp.class);
+ *     }
+ *
+ *     public static void main(String[] args) {
+ *         SpringApplication.run(NotificationDispatcherApp.class, args);
+ *     }
+ * }
+ */
