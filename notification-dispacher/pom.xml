@@ -24,7 +24,10 @@
     <artifactId>notification-dispacher</artifactId>
     <version>${app-version}</version>
     <packaging>jar</packaging>
-
+    <!-- wildfly
+    <packaging>war</packaging>
+    -->
+    
     <name>Notification Dispacher</name>
 
     <dependencies>
@@ -39,6 +42,25 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Wildfly
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <scope>provided</scope>
+    </dependency>
+        -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
