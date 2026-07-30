@@ -23,11 +23,11 @@ public class ApplicationProperties {
 	@Valid
 	private String contextPath;
 
-	@Value("${spring.security.api-key}")
+	@Value("${app.api-key}")
 	@Valid
 	private String secretKey;
 
-	@Value("${app.reciever.url:http://localhost:3001/api/notify}")
+	@Value("${app.service.url:http://localhost:3001/api/notify}")
 	@Valid
 	private String receiverServiceUrl;
 

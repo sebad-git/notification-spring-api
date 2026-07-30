@@ -15,5 +15,9 @@ services:
     extends:
       file: mail/mailpit-compose.yml
       service: mailpit
+  dispacher:
+    extends:
+      file: notification-dispacher/notification-dispacher.yml
+      service: dispacher
 volumes:
   postgres_data:
