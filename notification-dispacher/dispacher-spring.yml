@@ -6,7 +6,7 @@ services:
       - "9084:9084"
     environment:
       SERVER_PORT: 9084
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/notifications-db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/notifications-db
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_RABBITMQ_HOST: notifications-rmq
@@ -16,10 +16,10 @@ services:
       SPRING_MAIL_HOST: mail
       SPRING_MAIL_PORT: 1025
       APP_API_KEY: seba-123
-      APP_SERVICE_URL: http://localhost:3001/api/notify
+      APP_SERVICE_URL: http://reciever:3001/api/notify
     depends_on:
       - database
       - notifications-rmq
       - reciever
-      - mailpit
+      - mail
     restart: unless-stopped
