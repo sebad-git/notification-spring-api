@@ -2,6 +2,7 @@ package org.uy.sdm.notificator.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,8 +31,19 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(EmailValidationException.class)
 	public ResponseEntity<String> handleEmailValidationException(EmailValidationException ex) {
 		log.error(ex.getMessage(),ex);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-			.body(ex.getMessage());
+		return ResponseEntity.badRequest().body(ex.getMessage());
+	}
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+		log.error(ex.getMessage(),ex);
+		return ResponseEntity.badRequest().body(ex.getMessage());
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+		log.error(ex.getMessage(),ex);
+		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 
 	@ExceptionHandler(Exception.class)

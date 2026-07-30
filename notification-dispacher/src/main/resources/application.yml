@@ -1,0 +1,70 @@
+server:
+    use-forward-headers: true
+    port: ${SERVER_PORT:9084}
+    servlet:
+        context-path: /api
+# Logging
+logging:
+    level:
+        com.zaxxer.hikari: WARN
+        org.springframework.jdbc.datasource: INFO
+        org.springframework.amqp: INFO
+        org.springframework.boot.autoconfigure.amqp: INFO
+spring:
+    profiles:
+        active: default
+    main:
+        banner-mode: CONSOLE
+    output:
+        ansi:
+            enabled: ALWAYS
+    # PostgreSQL database properties
+    datasource:
+        url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/notifications-db}
+        username: ${SPRING_DATASOURCE_USERNAME:user}
+        password: ${SPRING_DATASOURCE_PASSWORD:password}
+        driver-class-name: org.postgresql.Driver
+        #Hikari pool.
+        hikari:
+            pool-name: pool
+            minimum-idle: 5
+            maximum-pool-size: 10
+            idle-timeout: 30000
+            connection-timeout: 30000
+            leak-detection-threshold: 2000
+    # Jpa
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+                naming:
+                    implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: false
+        open-in-view: false
+        show-sql: false
+    # RabbitMQ
+    rabbitmq:
+        host: ${SPRING_RABBITMQ_HOST:localhost}
+        port: ${SPRING_RABBITMQ_PORT:5672}
+        username: ${SPRING_RABBITMQ_USERNAME:rmq}
+        password: ${SPRING_RABBITMQ_PASSWORD:rmqpass}
+    # -- Mail.
+    mail:
+        host: ${SPRING_MAIL_HOST:localhost}
+        port: ${SPRING_MAIL_PORT:1025}
+        username: ${SPRING_MAIL_USERNAME:}
+        password: ${SPRING_MAIL_PASSWORD:}
+        properties:
+            mail:
+                smtp:
+                    auth: false
+                    starttls:
+                        enable: false
+app:
+    # Api Key
+    api-key: ${APP_API_KEY:seba-123}
+    # Reciever Service
+    service:
+        url: ${APP_SERVICE_URL:http://localhost:3001/api/notify}

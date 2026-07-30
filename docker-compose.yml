@@ -3,17 +3,34 @@ services:
     extends:
       file: database/posgres-db.yml
       service: postgresdb
+    networks:
+      - notificator-net  
   notifications-rmq:
     extends:
       file: rabbitmq/rabbitmq.yml
       service: notifications-rmq
+    networks:
+      - notificator-net
   reciever:
     extends:
       file: notification-reciever/node-reciever.yml
       service: nodejs-reciever
+    networks:
+      - notificator-net
   mail:
     extends:
       file: mail/mailpit-compose.yml
       service: mailpit
+    networks:
+      - notificator-net
+  dispacher:
+    extends:
+      file: notification-dispacher/dispacher-spring.yml
+      service: dispacher
+    networks:
+      - notificator-net
 volumes:
   postgres_data:
+networks:
+  notificator-net:
+    driver: bridge
